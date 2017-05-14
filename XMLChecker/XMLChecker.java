@@ -13,7 +13,6 @@
 import java.util.Stack;
 
 public class XMLChecker {
-	
 	/**
 	 * wellFormedXML checks a String for the XML requirements for wellformedness
 	 * @param xml - a string
@@ -25,7 +24,6 @@ public class XMLChecker {
 		Stack<String> tagStorage = new Stack<String>(); //for storing opening tags
 		String[] line = xml.split(">");
 
-		
 		// check for empty string input
 		if (xml.equals("")){
 			return false;
@@ -40,16 +38,16 @@ public class XMLChecker {
 		
 		//make sure that first tag matches the last (but only if they are not the same tag!)
 		String rootStart = line[0].substring(1); //trim the leading '<'
+		String rootEnd = line[line.length-1];
 		
 		//check that the last tag is valid. starts with a </
-		String rootEnd = line[line.length-1];
 		if (rootEnd.charAt(0) != '<') {
 			return false;
 		}
 		
 		//make sure rootStart and rootEnd match
 		rootEnd = rootEnd.substring(line[line.length-1].indexOf('<')).substring(2); //trim the leading "</"
-		if (!rootStart.equals(rootEnd) && line.length > 1) { //same name? If not...
+		if (!rootStart.equals(rootEnd) && line.length > 1) { //if mor than 1 tag, and the start/end not equal...
 			isWellFormed = false;
 		}
 		
