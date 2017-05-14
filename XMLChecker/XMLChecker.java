@@ -68,30 +68,28 @@ public class XMLChecker {
 				
 				if (line[i].contains("<")) { //it should, as long as no typos
 					
-					if (tagPortion.indexOf('/') < 0) { 									//opening tag
+					if (tagPortion.indexOf('/') < 0) { 					//opening tag
 						tagStorage.push(tagPortion); //add to stack
 						
 					} else if (tagPortion.charAt(tagPortion.length()-1) == '/') {   	//single empty content tag
 						//do nothing
-					} else if (tagPortion.charAt(1) == '/') {							//closing tag
+					} else if (tagPortion.charAt(1) == '/') {				//closing tag
 						
-						//make sure we aren't closing the root early
-						//if this tag is same as root, and we are not at the last tag
-						if (i != line.length-1 && rootStart.equals(tagPortion.substring(2))) { //not at last yet && ealry root close
+						//make sure we aren't closing the root early. if we are not at the last tag and this tag is same as root
+						if (i != line.length-1 && rootStart.equals(tagPortion.substring(2))) { //not at last tag yet, but get early root close
 							return false;
 						}
 						
-						if (!tagStorage.empty()) { 						//check stack. was the previous tag a matching opener?
-							closeTag = tagPortion.substring(2); 		//trim first two chars to get the tag name
-							openTag = tagStorage.pop().substring(1); 	//get previous open tag, trim the leading '<'
-							if (!openTag.equals(closeTag)) { 			//if they don't match, false. XML is case sensitive
+						if (!tagStorage.empty()) { 			 //check stack. was the previous tag a matching opener?
+							closeTag = tagPortion.substring(2); 	 //trim first two chars to get the tag name
+							openTag = tagStorage.pop().substring(1); //get previous open tag, trim the leading '<'
+							if (!openTag.equals(closeTag)) { 	 //if they don't match, false. XML is case sensitive
 								isWellFormed = false;
 							}
-						} else { 										// no open tag on stack to match the close tag with
+						} else { 					 // no open tag on stack to match the close tag with
 							isWellFormed = false;
 						}
-					}
-					
+					}	
 				} else { // if no '<' in this token, something was typed incorrectly
 					isWellFormed = false;
 				}
@@ -103,9 +101,9 @@ public class XMLChecker {
 		}
 		return isWellFormed;
 	}
-	public static void main(String[] args) {
-		XMLChecker sample = new XMLChecker();
-		System.out.println(sample.wellformedXML("</a>"));
-	}
+// 	public static void main(String[] args) {
+// 		XMLChecker sample = new XMLChecker();
+// 		System.out.println(sample.wellformedXML("</a>"));
+// 	}
 }
 
