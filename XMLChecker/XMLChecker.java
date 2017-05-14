@@ -25,24 +25,40 @@ public class XMLChecker {
 		Stack<String> tagStorage = new Stack<String>(); //for storing opening tags
 		String[] line = xml.split(">");
 
+		
+		// check for empty string input
+		if (xml.equals("")){
+			return false;
+		}
+		
 		//check that first token is a valid opening tag. 
-		if (line[0].charAt(0) != '<') {
-			isWellFormed = false;
+		if (line[0].charAt(0) != '<' || line[0].substring(0, line[0].length()-1).contains("/")) { 
+			return false;
 		} else if (line[0].charAt(line[0].length()-1) == '/' && line.length > 1) { //if last char is '/' (empty content single tag), and there is more to come
-			isWellFormed = false;
+			return false;
 		}
 		
 		//make sure that first tag matches the last (but only if they are not the same tag!)
 		String rootStart = line[0].substring(1); //trim the leading '<'
-		String rootEnd = line[line.length-1].substring(line[line.length-1].indexOf('<')).substring(2); //trim the leading "</"
+		
+		//check that the last tag is valid. starts with a </
+		String rootEnd = line[line.length-1];
+		if (rootEnd.charAt(0) != '<') {
+			return false;
+		}
+		
+		//make sure rootStart and rootEnd match
+		rootEnd = rootEnd.substring(line[line.length-1].indexOf('<')).substring(2); //trim the leading "</"
 		if (!rootStart.equals(rootEnd) && line.length > 1) { //same name? If not...
 			isWellFormed = false;
 		}
 		
+		//check all tags are nested correctly
+		
 		if (isWellFormed) { //if already false, save processing
 			String tagPortion, openTag, closeTag = "";
 			
-			for (int i=0; i<line.length; i++) { //go through each token\\
+			for (int i=0; i<line.length; i++) { //go through each token
 				
 				//get the tag part of each token, ignoring content
 				tagPortion = line[i].substring(line[i].indexOf('<')); 
@@ -58,6 +74,12 @@ public class XMLChecker {
 					} else if (tagPortion.charAt(tagPortion.length()-1) == '/') {   	//single empty content tag
 						//do nothing
 					} else if (tagPortion.charAt(1) == '/') {							//closing tag
+						
+						//make sure we aren't closing the root early
+						//if this tag is same as root, and we are not at the last tag
+						if (i != line.length-1 && rootStart.equals(tagPortion.substring(2))) { //not at last yet && ealry root close
+							return false;
+						}
 						
 						if (!tagStorage.empty()) { 						//check stack. was the previous tag a matching opener?
 							closeTag = tagPortion.substring(2); 		//trim first two chars to get the tag name
@@ -81,9 +103,9 @@ public class XMLChecker {
 		}
 		return isWellFormed;
 	}
-//	public static void main(String[] args) {
-//		XMLChecker sample = new XMLChecker();
-//		System.out.println(sample.wellformedXML("<a><b>trout<empty/><c>more content here</c></b></a>"));
-//	}
+	public static void main(String[] args) {
+		XMLChecker sample = new XMLChecker();
+		System.out.println(sample.wellformedXML("</a>"));
+	}
 }
 

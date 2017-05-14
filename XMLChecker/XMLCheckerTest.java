@@ -173,5 +173,50 @@ public class XMLCheckerTest extends TestCase {
     	test = "<a><b>piano</b><c>trumpet</c></a>";
         assertTrue(checker.wellformedXML(test));
     }
+    
+    /**
+     * Test for when two tags are opened and closed sequentially
+     * expect false
+     */
+    public void testNoAngleBrackets() {
+    	test = "a";
+        assertFalse(checker.wellformedXML(test));
+    }
+    
+    /**
+     * Test for when two tags are opened and closed sequentially
+     * expect false
+     */
+    public void testEmptyString() {
+    	test = "";
+        assertFalse(checker.wellformedXML(test));
+    }
+    
+    /**
+     * Test for when two tags are opened and closed sequentially
+     * expect false
+     */
+    public void testInputAfterRootClose() {
+    	test = "<a></a>abc";
+        assertFalse(checker.wellformedXML(test));
+    }
+    
+    /**
+     * Test for when two tags are opened and closed sequentially
+     * expect false
+     */
+    public void testTwoSlashTags() {
+    	test = "</a/>";
+        assertFalse(checker.wellformedXML(test));
+    }
+    
+    /**
+     * Test for when two tags are opened and closed sequentially
+     * expect false
+     */
+    public void testDoubleRoot() {
+    	test = "<a></a><a></a>";
+        assertFalse(checker.wellformedXML(test));
+    }
 }
 
