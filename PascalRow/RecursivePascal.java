@@ -1,4 +1,4 @@
-//Passcals Triangle
+//Pascals Triangle
 
 // row 0:			1
 // row 1:		      1   1
@@ -8,17 +8,13 @@
 // row 5:	      1   5  10   10  5   1
 // and so on... the pattern is that each number is the sum of the two numbers above it
 
-
-
 public class RecursivePascal {
-
 	/**
 	 * input the row index of the row of pascals triangle you wish to view
 	 * @param num - the index that refers to which row of pascals triangle you wish to view. First row is 0
 	 * @return the numbers within the requested row of pascals triangle, as an int[]
 	 * @throws IllegalArgumentException
 	 */
-	
 	public static int[] pascal(int num) throws IllegalArgumentException {
 		if (num < 0) {
 			throw new IllegalArgumentException("first row if pascal's triangle is row 0, then row 1, etc");
@@ -42,12 +38,10 @@ public class RecursivePascal {
 			for (int i=2; i<line.length-2; i++) { //fill the middle
 				line[i] = prev[i-1] + prev[i];
 			}
-			
 			result = line;
 		}
 		return result;
 	}
-	
 	
 	public static void main(String[] args) {
 		int[] pasc = pascal(15);
