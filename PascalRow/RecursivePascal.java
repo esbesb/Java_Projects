@@ -30,13 +30,11 @@ public class RecursivePascal {
 		} else {
 			int[] prev = pascal(num - 1);  //need previous line to build the next line
 			int[] line = new int[num + 1]; //current line
-			line[0] = 1; //new edge is 1
-			line[1] = num; //first in is same as line num
-			line[line.length -2] = num; //second last el
-			line[line.length -1] = 1; // last el
+			line[0] = 1;		       //new front edge is 1
+			line[line.length -1] = 1;      //new last edge is 1
 			
-			for (int i=2; i<line.length-2; i++) { //fill the middle
-				line[i] = prev[i-1] + prev[i];
+			for (int i=1; i<line.length-1; i++) {  //fill the middle
+				line[i] = prev[i-1] + prev[i]; //by adding the two above each new el
 			}
 			result = line;
 		}
