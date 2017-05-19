@@ -19,7 +19,6 @@ public class SnowFlake extends Applet {
       }
   }
   
-    
   /**
    * Paint method of the applet. Gets called whenever the applet needs a redraw
    * @param gr - The canvas to draw the applets content on
@@ -27,14 +26,11 @@ public class SnowFlake extends Applet {
   public void paint (Graphics gr) { 
     int width  = getSize().width;
     int height = getSize().height;
-    int min; //?? why this
     
     // Set background and pen color
     setBackground(Color.white);
     gr.setColor  (Color.blue);
     
-    // Calculate the maximal length in the window
-      
     // Draw a star  
     drawStar(gr, width/2, height/2, Math.min(width/4, height/4));
     
