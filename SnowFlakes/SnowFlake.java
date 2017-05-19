@@ -1,15 +1,3 @@
-/**
- * Course:      Data Structures and Algorithms for Language Processing SS 2017
- * Assignment:  lab 4, exercise 2. 19.05.2017
- * Author:      Timothy Day
- * Description: This program takes a string as an argument and checks it for XML wellformedness
- *
- * Honor Code:  I pledge that this program represents my own work.
- *		I received help from:
- * 		Réka Juhász
- *		in designing and debugging my program.
- */
-
 import java.applet.Applet;
 import java.awt.*;
 import java.lang.Math;
