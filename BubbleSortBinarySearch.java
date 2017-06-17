@@ -112,7 +112,11 @@ public class BubbleSortBinarySearch {
         System.out.println("no dice");
         return false;
     }
+    
 
+    /**
+     *  method to print the array in current order
+     */
     public void printArray(int[] array){
         for (int i=0; i<array.length; i++){
             System.out.print("| " + array[i] + " ");
@@ -135,7 +139,8 @@ public class BubbleSortBinarySearch {
         System.out.println("\nSorted Ascending");
         test.bubbleSort2(test.array);
         test.printArray(test.array);
-
+        
+        System.out.println("Binary Search");
         test.binarySearch(12);
     }
 }
