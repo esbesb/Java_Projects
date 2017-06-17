@@ -105,7 +105,7 @@ public class BubbleSortBinarySearch {
 
             } else { //the value at middle is equal, we found it!
 
-                System.out.println("found it! " + searchVal + " is at index: " + (middleIndex) + " of the sorted list");
+                System.out.println("found it! " + searchVal + " exists at index: " + (middleIndex) + " of the sorted list");
                 return true;
             }
         }
