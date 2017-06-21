@@ -2,7 +2,6 @@
 * this program was assigned in raw incomplete form by Universität Tübingen Data Structures and Algorithms class SS 2017
 * the assignment was completed by Tim Day
 */
-
 import java.io.*;
 import java.util.*;
 
@@ -105,7 +104,6 @@ public class Frequencies {
         word = word.replace("«", "");
         word = word.replace(":", "");
         word = word.replace(";", "");
-
         return word;
     }
 
