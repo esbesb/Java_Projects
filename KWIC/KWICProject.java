@@ -71,6 +71,7 @@ public class KWICProgram {
 
             System.out.println("Number of matches:  " + result.countMatches);
 
+            System.out.println();
             for (String sen : result.sentencesWithWord){
                 System.out.println(sen);
             }
