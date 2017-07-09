@@ -7,6 +7,7 @@ import opennlp.tools.sentdetect.SentenceDetectorME;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.io.InputStream;
 
 public class KWICProgram {
 
@@ -18,9 +19,11 @@ public class KWICProgram {
     public KWICProgram(String text) {
 
         try {
-            SentenceModel model = new SentenceModel(new FileInputStream("en-sent.bin"));
+            InputStream stream = new FileInputStream("en-sent.bin");
+            SentenceModel model = new SentenceModel(stream);
             SentenceDetectorME sentenceDetector = new SentenceDetectorME(model);
             sentences = sentenceDetector.sentDetect(text); // takes raw text
+            stream.close();
 
             article = new ArrayList<Sentence>(sentences.length); // create the article, as series of Sentence objs
             for (String sen : sentences) {
@@ -56,6 +59,8 @@ public class KWICProgram {
                     result.posTagsMatches.add(tags[i]);
                     result.posTagsWordsPreceding.add(tags[i-1]);
                     result.posTagsWordsFollowing.add(tags[i+1]);
+                    String[] lemmas = sen.getLemmas();
+                    result.lemmaMatches.add(lemmas[i]);
                 }
             }
         }
@@ -93,6 +98,14 @@ public class KWICProgram {
             for (String pos : result.posTagsWordsFollowing) {
                 System.out.print(pos + " ");
             }
+
+            System.out.println();
+            System.out.print("lemma of match: ");
+            for (String lem : result.lemmaMatches) {
+                System.out.print(lem + " ");
+            }
+
+            System.out.println("\n\n");
         }
     }
 
@@ -104,12 +117,14 @@ public class KWICProgram {
         private ArrayList<String> posTagsMatches;
         private ArrayList<String> posTagsWordsPreceding;
         private ArrayList<String> posTagsWordsFollowing;
+        private ArrayList<String> lemmaMatches;
 
         public SearchResult(){
             sentencesWithWord = new ArrayList<>();
             posTagsMatches = new ArrayList<>();
             posTagsWordsPreceding = new ArrayList<>();
             posTagsWordsFollowing = new ArrayList<>();
+            lemmaMatches = new ArrayList<>();
         }
 
     }
@@ -124,11 +139,13 @@ public class KWICProgram {
 
         KWICProgram test = new KWICProgram(testString);
 
-        test.printSearchResults("Australian");
+        test.printSearchResults("watches");
 
-        for (Sentence sen : test.article) {
-            sen.printTokensWithTags();
-        }
+        test.article.get(0).printTokensTagsLemmas();
+
+//        for (Sentence sen : test.article) {
+//            sen.printTokensWithTags();
+//        }
 
     }
 }
